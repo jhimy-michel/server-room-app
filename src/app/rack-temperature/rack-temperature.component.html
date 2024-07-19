@@ -1,0 +1,10 @@
+<div class="server-room-container">
+    <img src="assets/server-room3.png" alt="Server Room Layout" class="server-room-image">
+    <div class="heatmap-overlay">
+        <div *ngFor="let rack of serverRoomData?.racks" class="rack-overlay" [attr.data-id]="rack.id"
+            [style.background-color]="getColorForTemperature(rack.temperature)"
+            [style.top]="getRackPosition(rack.id).top" [style.left]="getRackPosition(rack.id).left">
+            {{ rack.id }}: {{ rack.temperature | number:'1.1-1' }} °C
+        </div>
+    </div>
+</div>

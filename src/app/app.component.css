@@ -1,0 +1,58 @@
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.control-panel-card {
+    margin: 20px;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.control-panel-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.rack-temperature-container,
+.chart-container {
+    flex: 1 1 45%;
+    background-color: #ffffff;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.additional-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.info-card {
+    flex: 1 1 45%;
+    margin: 10px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+
+    .rack-temperature-container,
+    .chart-container,
+    .info-card {
+        flex: 1 1 100%;
+    }
+
+    .control-panel-content,
+    .additional-cards {
+        flex-direction: column;
+    }
+}

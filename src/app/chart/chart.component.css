@@ -1,0 +1,19 @@
+.chart-container {
+    width: 100%;
+    height: auto;
+    margin-top: 5%;
+    margin-left: 5%;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 2px;
+}
