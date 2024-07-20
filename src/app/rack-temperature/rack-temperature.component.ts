@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ChangeDetectorRef,
-} from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCard, MatCardActions, MatCardModule } from '@angular/material/card';
 import { Subscription } from 'rxjs';
@@ -42,7 +37,6 @@ export class RackTemperatureComponent implements OnInit, OnDestroy {
     this.subscription = this.rackTemperatureService.serverRoomData$.subscribe(
       (data) => {
         if (data) {
-          console.log('rack data: ', data);
           this.serverRoomData = data;
           this.cdr.detectChanges();
         }
@@ -55,6 +49,9 @@ export class RackTemperatureComponent implements OnInit, OnDestroy {
   }
 
   getColorForTemperature(temp: number): string {
+    if (!temp) {
+      return 'transparent';
+    }
     const coldScale = d3
       .scaleLinear<string>()
       .domain([0, 15])

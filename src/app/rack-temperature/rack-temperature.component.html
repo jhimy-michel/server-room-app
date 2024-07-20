@@ -1,10 +1,19 @@
-<div class="server-room-container">
-    <img src="assets/server-room3.png" alt="Server Room Layout" class="server-room-image">
-    <div class="heatmap-overlay">
-        <div *ngFor="let rack of serverRoomData?.racks" class="rack-overlay" [attr.data-id]="rack.id"
-            [style.background-color]="getColorForTemperature(rack.temperature)"
-            [style.top]="getRackPosition(rack.id).top" [style.left]="getRackPosition(rack.id).left">
-            {{ rack.id }}: {{ rack.temperature | number:'1.1-1' }} °C
+<mat-card class="heatmap-card">
+    <mat-card-header>
+        <mat-card-title>Server Room Temperature Heatmap</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="server-room-container">
+            <div class="server-room-grid">
+                <div *ngFor="let rack of serverRoomData?.racks" class="rack-cell" [attr.data-id]="rack.id"
+                    [style.background-color]="getColorForTemperature(rack.temperature)">
+                    <div class="rack-info">
+                        <span class="rack-id">{{ rack.id }}</span>
+                        <span class="rack-temp">{{ rack.temperature | number:'1.1-1' }}°C</span>
+                    </div>
+                </div>
+            </div>
+            <div class="room-label">SERVER ROOM</div>
         </div>
-    </div>
-</div>
+    </mat-card-content>
+</mat-card>

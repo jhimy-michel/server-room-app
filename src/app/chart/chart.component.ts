@@ -42,17 +42,6 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
 
   constructor(private rackTemperatureService: RackTemperatureService) {}
 
-  ngOnInit() {
-    /* this.subscription.add(
-      this.rackTemperatureService.serverRoomData$.subscribe((data) => {
-        if (data) {
-          
-          this.data = data;
-        }
-      })
-    ); */
-  }
-
   ngAfterViewInit() {
     this.createChart();
   }
@@ -135,7 +124,7 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
       (data) => {
         this.data = data;
         this.updateData(data);
-        console.log('char data: ', data);
+        // console.log('char data: ', data);
       }
     );
   }
