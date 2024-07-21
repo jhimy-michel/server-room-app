@@ -9,7 +9,6 @@ import {
 import * as d3 from 'd3';
 import { RackTemperatureService } from '../rack-temperature.service';
 import {
-  RackTemperature,
   ServerRoomData,
 } from '../rack-temperature/rack-temperature.component';
 import { CommonModule } from '@angular/common';

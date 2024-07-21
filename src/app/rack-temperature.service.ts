@@ -26,7 +26,7 @@ export class RackTemperatureService {
   constructor(private http: HttpClient) {}
 
   startStream() {
-    this.http.post('http://localhost:8080/start', {}).subscribe(() => {
+    this.http.post('https://real-time-api-i3fo7btsmq-ey.a.run.app/start', {}).subscribe(() => {
       if (!this.eventSource) {
         this.connectToStream();
       }
@@ -34,7 +34,7 @@ export class RackTemperatureService {
   }
 
   stopStream() {
-    this.http.post('http://localhost:8080/stop', {}).subscribe(() => {
+    this.http.post('https://real-time-api-i3fo7btsmq-ey.a.run.app/stop', {}).subscribe(() => {
       if (this.eventSource) {
         this.eventSource.close();
         this.eventSource = null;
@@ -44,12 +44,11 @@ export class RackTemperatureService {
 
   private connectToStream() {
     this.eventSource = new EventSource(
-      'http://localhost:8080/server-room-stream'
+      'https://real-time-api-i3fo7btsmq-ey.a.run.app/server-room-stream'
     );
     this.eventSource.onmessage = (event) => {
       try {
         const serverRoomData = JSON.parse(event.data);
-        // console.log(event.data);
         this.serverRoomDataSubject.next(serverRoomData);
       } catch (e) {
         console.log(e);
