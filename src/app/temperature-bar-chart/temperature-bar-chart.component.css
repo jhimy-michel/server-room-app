@@ -1,0 +1,77 @@
+.bar-chart-grid-item {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.bar-chart-container {
+    flex-grow: 1;
+    width: 100%;
+    min-height: 300px;
+    /* Adjust this value based on your needs */
+    margin: 10px 0;
+}
+
+h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #fff;
+}
+
+.chart-info {
+    font-size: 14px;
+    color: #666;
+    margin-top: 10px;
+}
+
+#chart {
+    width: 100%;
+    height: 100%;
+}
+
+.bar {
+    fill: steelblue;
+    transition: fill 0.3s ease;
+}
+
+.bar:hover {
+    fill: #45a049;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.x-axis text {
+    font-size: 12px;
+}
+
+.y-axis text {
+    font-size: 12px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .bar-chart-container {
+        min-height: 200px;
+    }
+
+    h3 {
+        font-size: 16px;
+    }
+
+    .chart-info {
+        font-size: 12px;
+    }
+
+    .x-axis text,
+    .y-axis text {
+        font-size: 10px;
+    }
+}

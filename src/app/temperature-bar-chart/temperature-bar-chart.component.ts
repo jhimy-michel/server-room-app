@@ -3,10 +3,12 @@ import { RackTemperatureService } from '../rack-temperature.service';
 import { Subscription } from 'rxjs';
 import * as d3 from 'd3';
 
+import { MatCard, MatCardModule } from '@angular/material/card';
+
 @Component({
   selector: 'app-temperature-bar-chart',
   standalone: true,
-  imports: [],
+  imports: [MatCard, MatCardModule],
   templateUrl: './temperature-bar-chart.component.html',
   styleUrl: './temperature-bar-chart.component.css',
 })
@@ -16,15 +18,13 @@ export class TemperatureBarChartComponent implements OnInit, OnDestroy {
   private xAxis: any;
   private yAxis: any;
   private margin = { top: 20, right: 20, bottom: 30, left: 40 };
-  private width = 960 - this.margin.left - this.margin.right;
-  private height = 500 - this.margin.top - this.margin.bottom;
+  private width = 600 - this.margin.left - this.margin.right;
+  private height = 300 - this.margin.top - this.margin.bottom;
   private subscription!: Subscription;
   private x: any;
   private y: any;
 
-  constructor(
-    private rackTemperatureService: RackTemperatureService
-  ) {}
+  constructor(private rackTemperatureService: RackTemperatureService) {}
 
   ngOnInit() {
     this.subscription = this.rackTemperatureService.serverRoomData$.subscribe(

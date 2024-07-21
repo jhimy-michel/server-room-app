@@ -1,9 +1,11 @@
-<div class="chart-container">
+<div class="chart-grid-item">
     <h3>Average Temperature Over Time</h3>
-    <div #chart></div>
-    <p>Last updated: {{ data?.timestamp | date:'medium' }}</p>
-    <mat-card-actions>
+    <div class="chart-container">
+        <div #chart></div>
+    </div>
+    <p class="timestamp">Last updated: {{ data?.timestamp | date:'medium' }}</p>
+    <div class="chart-actions">
         <button mat-raised-button color="primary" (click)="startRealTimeUpdates()">Start Stream</button>
         <button mat-raised-button color="warn" (click)="stopRealTimeUpdates()">Stop Stream</button>
-    </mat-card-actions>
+    </div>
 </div>

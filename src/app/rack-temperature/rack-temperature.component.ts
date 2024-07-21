@@ -2,9 +2,11 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCard, MatCardActions, MatCardModule } from '@angular/material/card';
 import { Subscription } from 'rxjs';
+import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 
 import { RackTemperatureService } from '../rack-temperature.service';
 import * as d3 from 'd3';
+import { rackDataInitializer } from './racks';
 
 export interface RackTemperature {
   id: string;
@@ -20,12 +22,19 @@ export interface ServerRoomData {
 @Component({
   selector: 'app-rack-temperature',
   standalone: true,
-  imports: [CommonModule, MatCard, MatCardActions, MatCardModule],
+  imports: [
+    CommonModule,
+    MatCard,
+    MatCardActions,
+    MatCardModule,
+    MatGridList,
+    MatGridTile,
+  ],
   templateUrl: './rack-temperature.component.html',
   styleUrls: ['./rack-temperature.component.css'],
 })
 export class RackTemperatureComponent implements OnInit, OnDestroy {
-  serverRoomData: ServerRoomData | null = null;
+  serverRoomData: ServerRoomData = rackDataInitializer;
   private subscription: Subscription = new Subscription();
 
   constructor(
@@ -38,6 +47,7 @@ export class RackTemperatureComponent implements OnInit, OnDestroy {
       (data) => {
         if (data) {
           this.serverRoomData = data;
+          console.log(data);
           this.cdr.detectChanges();
         }
       }

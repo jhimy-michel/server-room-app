@@ -1,32 +1,25 @@
 <!-- app.component.html -->
 <div class="dashboard-container">
   <mat-toolbar color="primary" class="dashboard-header">
-    <span>Server Room Temperature Monitor</span>
+    <span>
+      <h1>Server Room Temperature Monitor</h1>
+    </span>
     <span class="spacer"></span>
     <!-- <span class="timestamp">Last updated: {{ lastUpdated | date:'medium' }}</span> -->
   </mat-toolbar>
 
-  <div class="dashboard-content">
-    <mat-card class="heatmap-card">
-      <mat-card-header>
-        <mat-card-title>3D Heatmap</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <app-rack-temperature/>
-      </mat-card-content>
-    </mat-card>
+  <!--  <div class="dashboard-content">
 
-    <div class="dashboard-grid">
-      <mat-card class="dashboard-card metrics-panel">
-        <mat-card-header>
-          <mat-card-title>Rack Metrics</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <!-- Detailed Metrics component goes here -->
-          <!-- <app-rack-metrics></app-rack-metrics> -->
-        </mat-card-content>
-      </mat-card>
+  </div> -->
+  <mat-grid-list cols="1">
+    <app-rack-temperature />
+  </mat-grid-list>
 
+  <mat-grid-list cols="3" rowHeight="3:2">
+    <mat-grid-tile>
+      <app-temperature-bar-chart />
+    </mat-grid-tile>
+    <mat-grid-tile>
       <mat-card class="dashboard-card trend-analysis">
         <mat-card-header>
           <mat-card-title>Temperature Trend</mat-card-title>
@@ -35,28 +28,8 @@
           <app-chart />
         </mat-card-content>
       </mat-card>
-
-      <mat-card class="dashboard-card status-distribution">
-        <mat-card-header>
-          <mat-card-title>Status Distribution</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <!-- Status Distribution component goes here -->
-          <!-- <app-status-distribution></app-status-distribution> -->
-        </mat-card-content>
-      </mat-card>
-
-      <mat-card class="dashboard-card temperature-range">
-        <mat-card-header>
-          <mat-card-title>Temperature Range</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <!-- Temperature Range component goes here -->
-          <!-- <app-temperature-range></app-temperature-range> -->
-        </mat-card-content>
-      </mat-card>
-
-      <mat-card class="dashboard-card anomaly-detection">
+    </mat-grid-tile>
+    <mat-grid-tile><mat-card class="dashboard-card anomaly-detection">
         <mat-card-header>
           <mat-card-title>Anomalies</mat-card-title>
         </mat-card-header>
@@ -64,7 +37,6 @@
           <!-- Anomaly Detection component goes here -->
           <!-- <app-anomaly-detection></app-anomaly-detection> -->
         </mat-card-content>
-      </mat-card>
-    </div>
-  </div>
+      </mat-card></mat-grid-tile>
+  </mat-grid-list>
 </div>
