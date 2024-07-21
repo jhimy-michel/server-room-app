@@ -1,5 +1,7 @@
 <!-- app.component.html -->
 <div class="dashboard-container">
+
+  <!-- Header -->
   <mat-toolbar color="primary" class="dashboard-header">
     <span>
       <h1>Server Room Temperature Monitor</h1>
@@ -7,12 +9,15 @@
     <span class="spacer"></span>
   </mat-toolbar>
 
+  <!-- Buttons to control api -->
   <app-simulation-controls />
 
+  <!-- heat map chart -->
   <mat-grid-list cols="1">
     <app-rack-temperature />
   </mat-grid-list>
 
+  <!-- additional charts -->
   <mat-grid-list cols="3" rowHeight="3:2">
     <mat-grid-tile>
       <app-temperature-bar-chart />

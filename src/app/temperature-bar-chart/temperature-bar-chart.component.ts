@@ -5,6 +5,7 @@ import * as d3 from 'd3';
 
 import { MatCard, MatCardModule } from '@angular/material/card';
 import { rackDataInitializer } from '../../racks';
+import { RackTemperature, ServerRoomData } from '../server-room.type';
 
 @Component({
   selector: 'app-temperature-bar-chart',
@@ -61,21 +62,41 @@ export class TemperatureBarChartComponent implements OnInit, OnDestroy {
   }
 
   private initializeAxes() {
-    this.x = d3.scaleBand().range([0, this.width]).padding(0.1);
-
+    // Define scales
+    this.x = d3
+      .scaleBand()
+      .domain(rackDataInitializer.racks.map((val) => val.id))
+      .range([0, this.width])
+      .padding(0.1);
     this.y = d3
       .scaleLinear()
       .domain([0, 40]) // Assuming temperature range between 0 and 40
       .range([this.height, 0]);
 
-    this.xAxis = this.chart
+    // Define axes
+    this.xAxis = d3
+      .axisBottom(this.x)
+      .tickValues(rackDataInitializer.racks.map((val) => val.id)); // Adjust tick count as needed
+    this.yAxis = d3.axisLeft(this.y);
+
+    // Append and style x-axis
+    this.chart
       .append('g')
       .attr('class', 'x-axis')
-      .attr('transform', `translate(0,${this.height})`);
+      .attr('transform', `translate(0,${this.height})`)
+      .call(this.xAxis)
+      .selectAll('text')
+      .style('fill', 'white'); // Style x-axis labels
 
-    this.yAxis = this.chart.append('g').attr('class', 'y-axis');
+    // Append and style y-axis
+    this.chart
+      .append('g')
+      .attr('class', 'y-axis')
+      .call(this.yAxis)
+      .selectAll('text')
+      .style('fill', 'white'); // Style y-axis labels
 
-    // Add labels
+    // Add x-axis label
     this.chart
       .append('text')
       .attr(
@@ -83,8 +104,9 @@ export class TemperatureBarChartComponent implements OnInit, OnDestroy {
         `translate(${this.width / 2},${this.height + this.margin.top + 20})`
       )
       .style('text-anchor', 'middle')
-      .text('Rack ID');
+      .style('fill', 'white');
 
+    // Add y-axis label
     this.chart
       .append('text')
       .attr('transform', 'rotate(-90)')
@@ -92,19 +114,20 @@ export class TemperatureBarChartComponent implements OnInit, OnDestroy {
       .attr('x', 0 - this.height / 2)
       .attr('dy', '1em')
       .style('text-anchor', 'middle')
+      .style('fill', 'white')
       .text('Temperature (°C)');
   }
 
-  private updateChart(data: any) {
-    this.x.domain(data.racks.map((d: any) => d.id));
-    this.y.domain([0, d3.max(data.racks, (d: any) => d.temperature)]);
-
-    this.xAxis.transition().duration(1000).call(d3.axisBottom(this.x));
-    this.yAxis.transition().duration(1000).call(d3.axisLeft(this.y));
+  private updateChart(data: ServerRoomData) {
+    this.x.domain(data.racks.map((d: RackTemperature) => d.id));
+    this.y.domain([
+      0,
+      d3.max(data.racks, (d: RackTemperature) => d.temperature),
+    ]);
 
     const bars = this.chart
       .selectAll('.bar')
-      .data(data.racks, (d: any) => d.id);
+      .data(data.racks, (d: RackTemperature) => d.id);
 
     bars
       .exit()
@@ -123,16 +146,19 @@ export class TemperatureBarChartComponent implements OnInit, OnDestroy {
       .merge(bars)
       .transition()
       .duration(1000)
-      .attr('x', (d: any) => this.x(d.id))
+      .attr('x', (d: RackTemperature) => this.x(d.id))
       .attr('width', this.x.bandwidth())
-      .attr('y', (d: any) => this.y(d.temperature))
-      .attr('height', (d: any) => this.height - this.y(d.temperature))
-      .attr('fill', (d: any) => this.getColorByStatus(d.status));
+      .attr('y', (d: RackTemperature) => this.y(d.temperature))
+      .attr(
+        'height',
+        (d: RackTemperature) => this.height - this.y(d.temperature)
+      )
+      .attr('fill', (d: RackTemperature) => this.getColorByStatus(d.status));
 
     // Add labels on top of bars
     const labels = this.chart
       .selectAll('.bar-label')
-      .data(data.racks, (d: any) => d.id);
+      .data(data.racks, (d: RackTemperature) => d.id);
 
     labels.exit().remove();
 
@@ -143,10 +169,10 @@ export class TemperatureBarChartComponent implements OnInit, OnDestroy {
       .merge(labels)
       .transition()
       .duration(500)
-      .attr('x', (d: any) => this.x(d.id) + this.x.bandwidth() / 2)
-      .attr('y', (d: any) => this.y(d.temperature) - 5)
+      .attr('x', (d: RackTemperature) => this.x(d.id) + this.x.bandwidth() / 2)
+      .attr('y', (d: RackTemperature) => this.y(d.temperature) - 5)
       .attr('text-anchor', 'middle')
-      .text((d: any) => d.temperature.toFixed(1));
+      .text((d: RackTemperature) => d.temperature.toFixed(1));
   }
 
   private getColorByStatus(status: string): string {

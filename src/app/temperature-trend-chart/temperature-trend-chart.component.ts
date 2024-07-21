@@ -7,23 +7,28 @@ import {
   ViewChild,
 } from '@angular/core';
 import * as d3 from 'd3';
-import { RackTemperatureService } from '../rack-temperature.service';
-import {
-  ServerRoomData,
-} from '../rack-temperature/rack-temperature.component';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { MatCardActions, MatCardModule } from '@angular/material/card';
+
+import { RackTemperatureService } from '../rack-temperature.service';
+import { RackTemperature, ServerRoomData } from '../server-room.type';
+
+interface DataPoint {
+  timestamp: Date;
+  averageTemp: number;
+}
 
 @Component({
   selector: 'app-chart',
   standalone: true,
   imports: [CommonModule, MatCardActions, MatCardModule],
-  templateUrl: './chart.component.html',
-  styleUrls: ['./chart.component.css'],
+  templateUrl: './temperature-trend-chart.component.html',
+  styleUrls: ['./temperature-trend-chart.component.css'],
 })
-export class ChartComponent implements AfterViewInit, OnDestroy {
-  @Input() data: ServerRoomData | null = null;
+export class TemperatureTrendChartComponent
+  implements AfterViewInit, OnDestroy
+{
   @ViewChild('chart') private chartContainer!: ElementRef;
 
   private svg: d3.Selection<SVGGElement, unknown, null, undefined> | undefined;
@@ -31,11 +36,11 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
   private width = 600 - this.margin.left - this.margin.right;
   private height = 300 - this.margin.top - this.margin.bottom;
 
-  private x: any;
-  private y: any;
-  private line: any;
+  private x?: d3.ScaleTime<number, number>;
+  private y?: d3.ScaleLinear<number, number>;
+  private line?: d3.Line<DataPoint>;
 
-  private data2: any[] = [];
+  private dataPoint: DataPoint[] = [];
 
   private subscription: Subscription = new Subscription();
 
@@ -58,12 +63,12 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  updateData(newData: any) {
+  updateData(newData: ServerRoomData) {
     const timestamp = new Date(newData.timestamp);
     const averageTemp = this.calculateAverageTemp(newData.racks);
-    this.data2.push({ timestamp, averageTemp });
+    this.dataPoint.push({ timestamp, averageTemp });
 
-    this.updateLine(this.data2);
+    this.updateLine(this.dataPoint);
   }
 
   private createChart(): void {
@@ -77,7 +82,7 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
 
     this.x = d3
       .scaleTime()
-      .domain([new Date(), new Date()])
+      .domain([])
       .range([0, this.width]);
 
     this.y = d3
@@ -86,11 +91,9 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
       .range([this.height, 0]);
 
     this.line = d3
-      .line()
-      //@ts-ignore
-      .x((d) => this.x(d.timestamp))
-      //@ts-ignore
-      .y((d) => this.y(d.averageTemp));
+      .line<DataPoint>()
+      .x((d) => this.x?.(d.timestamp) ?? 0)
+      .y((d) => this.y?.(d.averageTemp) ?? 0);
 
     this.svg
       .append('g')
@@ -105,26 +108,29 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
     this.svg.append('g').attr('class', 'grid-y');
   }
 
-  private calculateAverageTemp(racks: any[]) {
+  private calculateAverageTemp(racks: RackTemperature[]) {
     const totalTemp = racks.reduce((sum, rack) => sum + rack.temperature, 0);
     return totalTemp / racks.length;
   }
 
-  private updateLine(data: any[]) {
-    if (!this.svg && !this.line) return;
+  private updateLine(data: DataPoint[]) {
+    if (!this.svg || !this.line || !this.x) return;
 
-    // @ts-ignore
+    // Remove old line
     this.svg.select('.line').remove();
 
-    // @ts-ignore
+    // Append new line
     this.svg
       .append('path')
       .datum(data)
       .attr('class', 'line')
       .attr('d', this.line)
       .attr('stroke', 'red')
-      .attr('fill', 'none');
-
-    this.x.domain(d3.extent(data, (d) => d.timestamp));
+      .attr('stroke-width', '2px')
+      .attr('fill', 'none')
+      .attr('opacity', 0)
+      .transition()
+      .duration(100)
+      .attr('opacity', 1);
   }
 }

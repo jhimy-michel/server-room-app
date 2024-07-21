@@ -6,17 +6,8 @@ import { Subscription } from 'rxjs';
 import { RackTemperatureService } from '../rack-temperature.service';
 import * as d3 from 'd3';
 import { rackDataInitializer } from '../../racks';
+import { ServerRoomData } from '../server-room.type';
 
-export interface RackTemperature {
-  id: string;
-  temperature: number;
-  status: string;
-}
-
-export interface ServerRoomData {
-  timestamp: string;
-  racks: RackTemperature[];
-}
 
 @Component({
   selector: 'app-rack-temperature',
@@ -44,7 +35,6 @@ export class RackTemperatureComponent implements OnInit, OnDestroy {
       (data) => {
         if (data) {
           this.serverRoomData = data;
-          console.log(data);
           this.cdr.detectChanges();
         }
       }

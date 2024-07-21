@@ -4,7 +4,9 @@
     </mat-card-header>
     <mat-card-content>
         <div class="system-logs">
-            <button (click)="downloadCSV()" class="download-btn">Download CSV</button>
+            <p>You can download the logs in CSV format: <button (click)="downloadCSV()" class="download-btn">Download
+                    CSV</button></p>
+
             <div class="logs-container">
                 <div *ngFor="let log of logs" class="log-entry">
                     <div class="timestamp">{{ log.timestamp | date:'medium' }}</div>

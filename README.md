@@ -1,8 +1,10 @@
 # Server Monitor App
 
-Welcome to the Server Monitor App! This Angular app monitors server rack temperatures in real-time using D3.js for data visualization.
+Welcome to the Server Monitor App!
 
 This app provides an easy-to-use interface for monitoring server rack temperatures in real-time, allowing data center operators to quickly identify any issues and take proactive measures to maintain optimal temperatures.
+
+You can use a live version of this application: https://server-room-app-4a455.web.app/
 
 ## Components
 

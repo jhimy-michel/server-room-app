@@ -6,10 +6,10 @@ import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 
 import { RackTemperatureComponent } from './rack-temperature/rack-temperature.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ChartComponent } from './chart/chart.component';
 import { TemperatureBarChartComponent } from './temperature-bar-chart/temperature-bar-chart.component';
 import { LogsComponent } from './logs/logs.component';
 import { SimulationControlsComponent } from './simulation-controls/simulation-controls.component';
+import { TemperatureTrendChartComponent } from './temperature-trend-chart/temperature-trend-chart.component';
 
 @Component({
   selector: 'app-root',
@@ -18,16 +18,13 @@ import { SimulationControlsComponent } from './simulation-controls/simulation-co
     RouterOutlet,
     HttpClientModule,
     RackTemperatureComponent,
-    ChartComponent,
+    TemperatureTrendChartComponent,
     TemperatureBarChartComponent,
-    MatCard,
-    MatCardActions,
-    MatCardModule,
+    LogsComponent,
+    SimulationControlsComponent,
     MatToolbarModule,
     MatGridList,
     MatGridTile,
-    LogsComponent,
-    SimulationControlsComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
