@@ -44,10 +44,19 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.createChart();
+    this.subscription = this.rackTemperatureService.serverRoomData$.subscribe(
+      (data) => {
+        if (data) {
+          this.updateData(data);
+        }
+      }
+    );
   }
 
   ngOnDestroy() {
-    this.rackTemperatureService.stopStream();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   updateData(newData: any) {
@@ -104,35 +113,19 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
 
   private updateLine(data: any[]) {
     if (!this.svg && !this.line) return;
+
     // @ts-ignore
     this.svg.select('.line').remove();
+
     // @ts-ignore
     this.svg
       .append('path')
       .datum(data)
       .attr('class', 'line')
       .attr('d', this.line)
-      .attr('stroke', 'blue')
+      .attr('stroke', 'red')
       .attr('fill', 'none');
 
     this.x.domain(d3.extent(data, (d) => d.timestamp));
-  }
-
-  public startRealTimeUpdates(): void {
-    this.rackTemperatureService.startStream();
-    this.subscription = this.rackTemperatureService.serverRoomData$.subscribe(
-      (data) => {
-        this.data = data;
-        this.updateData(data);
-        // console.log('char data: ', data);
-      }
-    );
-  }
-
-  public stopRealTimeUpdates(): void {
-    this.rackTemperatureService.stopStream();
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
   }
 }

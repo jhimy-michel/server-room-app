@@ -5,8 +5,10 @@
       <h1>Server Room Temperature Monitor</h1>
     </span>
     <span class="spacer"></span>
-    <!-- <span class="timestamp">Last updated: {{ lastUpdated | date:'medium' }}</span> -->
   </mat-toolbar>
+
+  <app-simulation-controls />
+
   <mat-grid-list cols="1">
     <app-rack-temperature />
   </mat-grid-list>

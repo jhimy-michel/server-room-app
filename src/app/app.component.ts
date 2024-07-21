@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ChartComponent } from './chart/chart.component';
 import { TemperatureBarChartComponent } from './temperature-bar-chart/temperature-bar-chart.component';
 import { LogsComponent } from './logs/logs.component';
+import { SimulationControlsComponent } from './simulation-controls/simulation-controls.component';
 
 @Component({
   selector: 'app-root',
@@ -25,7 +26,8 @@ import { LogsComponent } from './logs/logs.component';
     MatToolbarModule,
     MatGridList,
     MatGridTile,
-    LogsComponent
+    LogsComponent,
+    SimulationControlsComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
