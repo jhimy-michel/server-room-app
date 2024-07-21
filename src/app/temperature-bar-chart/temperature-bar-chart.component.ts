@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import * as d3 from 'd3';
 
 import { MatCard, MatCardModule } from '@angular/material/card';
+import { rackDataInitializer } from '../../racks';
 
 @Component({
   selector: 'app-temperature-bar-chart',
@@ -62,7 +63,10 @@ export class TemperatureBarChartComponent implements OnInit, OnDestroy {
   private initializeAxes() {
     this.x = d3.scaleBand().range([0, this.width]).padding(0.1);
 
-    this.y = d3.scaleLinear().range([this.height, 0]);
+    this.y = d3
+      .scaleLinear()
+      .domain([0, 40]) // Assuming temperature range between 0 and 40
+      .range([this.height, 0]);
 
     this.xAxis = this.chart
       .append('g')

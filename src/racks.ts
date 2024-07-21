@@ -1,4 +1,4 @@
-import { ServerRoomData } from './rack-temperature.component';
+import { ServerRoomData } from "./app/rack-temperature/rack-temperature.component";
 
 export const rackDataInitializer: ServerRoomData = {
   timestamp: '',

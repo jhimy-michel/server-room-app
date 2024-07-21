@@ -69,7 +69,7 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
 
     this.x = d3
       .scaleTime()
-      .domain([new Date(2024, 6, 19), new Date()]) // Initial domain set for the first data point
+      .domain([new Date(), new Date()])
       .range([0, this.width]);
 
     this.y = d3

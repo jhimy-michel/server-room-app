@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 
 import { RackTemperatureService } from '../rack-temperature.service';
 import * as d3 from 'd3';
-import { rackDataInitializer } from './racks';
+import { rackDataInitializer } from '../../racks';
 
 export interface RackTemperature {
   id: string;
