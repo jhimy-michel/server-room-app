@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCard, MatCardActions, MatCardModule } from '@angular/material/card';
 import { Subscription } from 'rxjs';
-import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 
 import { RackTemperatureService } from '../rack-temperature.service';
 import * as d3 from 'd3';
@@ -26,9 +25,7 @@ export interface ServerRoomData {
     CommonModule,
     MatCard,
     MatCardActions,
-    MatCardModule,
-    MatGridList,
-    MatGridTile,
+    MatCardModule
   ],
   templateUrl: './rack-temperature.component.html',
   styleUrls: ['./rack-temperature.component.css'],

@@ -30,9 +30,6 @@ export class TemperatureBarChartComponent implements OnInit, OnDestroy {
     this.subscription = this.rackTemperatureService.serverRoomData$.subscribe(
       (data) => {
         if (data) {
-          console.log('rack data: ', data);
-          // this.serverRoomData = data;
-          // this.cdr.detectChanges();
           this.updateChart(data);
         }
       }

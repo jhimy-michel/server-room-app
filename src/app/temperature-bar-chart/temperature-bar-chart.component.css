@@ -10,7 +10,6 @@
     flex-grow: 1;
     width: 100%;
     min-height: 300px;
-    /* Adjust this value based on your needs */
     margin: 10px 0;
 }
 
@@ -44,16 +43,18 @@ h3 {
 .axis path,
 .axis line {
     fill: none;
-    stroke: #000;
+    stroke: #fff;
     shape-rendering: crispEdges;
 }
 
 .x-axis text {
     font-size: 12px;
+    color: #fff;
 }
 
 .y-axis text {
     font-size: 12px;
+    color: #fff;
 }
 
 /* Responsive adjustments */

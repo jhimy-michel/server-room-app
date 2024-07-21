@@ -1,0 +1,19 @@
+<mat-card class="dashboard-sys-logs">
+    <mat-card-header>
+        <mat-card-title>Server Room Temperature Logs</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="system-logs">
+            <button (click)="downloadCSV()" class="download-btn">Download CSV</button>
+            <div class="logs-container">
+                <div *ngFor="let log of logs" class="log-entry">
+                    <div class="timestamp">{{ log.timestamp | date:'medium' }}</div>
+                    <div *ngFor="let message of log.messages" class="log-message"
+                        [class.dangerous]="message.isDangerous">
+                        Rack {{ message.id }}: {{ message.temperature | number:'1.2-2' }}°C - {{ message.status }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

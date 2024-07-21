@@ -8,6 +8,7 @@ import { RackTemperatureComponent } from './rack-temperature/rack-temperature.co
 import { HttpClientModule } from '@angular/common/http';
 import { ChartComponent } from './chart/chart.component';
 import { TemperatureBarChartComponent } from './temperature-bar-chart/temperature-bar-chart.component';
+import { LogsComponent } from './logs/logs.component';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,8 @@ import { TemperatureBarChartComponent } from './temperature-bar-chart/temperatur
     MatCardModule,
     MatToolbarModule,
     MatGridList,
-    MatGridTile
+    MatGridTile,
+    LogsComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
