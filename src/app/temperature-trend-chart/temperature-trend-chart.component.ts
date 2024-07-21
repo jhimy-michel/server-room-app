@@ -82,7 +82,7 @@ export class TemperatureTrendChartComponent
 
     this.x = d3
       .scaleTime()
-      .domain([])
+      .domain([new Date(), new Date()])
       .range([0, this.width]);
 
     this.y = d3
@@ -132,5 +132,9 @@ export class TemperatureTrendChartComponent
       .transition()
       .duration(100)
       .attr('opacity', 1);
+
+    this.svg.select('.grid-x').remove();
+    const xDomain = d3.extent(data, (d) => d.timestamp) as [Date, Date];
+    this.x.domain(xDomain);
   }
 }
